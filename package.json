@@ -14,6 +14,10 @@
     "test": "karma start"
   },
   "dependencies": {
+    "@vaadin/vaadin-button": "^2.2.1",
+    "@vaadin/vaadin-checkbox": "^2.2.10",
+    "@vaadin/vaadin-radio-button": "^1.2.3",
+    "@vaadin/vaadin-text-field": "^2.4.14",
     "lit-element": "^2.0.0"
   },
   "devDependencies": {
