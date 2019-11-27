@@ -39,13 +39,18 @@ class CatculatorCatsys extends LitElement {
       <h1 id="display__numbers"> ${this.result} </h1>
     </div>
     <div class="keyboard">
-  ${this.digit.map(digit => html `
-    <button class="digit" id="${digit}">
-      ${digit}
-      </button>
-    `)
-  } </div>
+      ${this.digit.map(digit => html `
+      <vaadin-button @click="${this.digitSelect}" id="digit" value="${digit}">
+        ${digit}
+      </vaadin-button>
+      `
+      )}
+    </div>
    `;
+  }
+  digitSelect() {
+    const inputNode = this.shadowRoot.querySelector('#digit')
+    console.log(inputNode.innerText);
   }
 }
 
@@ -62,10 +67,8 @@ class CatculatorCatsys extends LitElement {
 //   <
 //   /vaadin-text-field>
 
-//   <
-//   vaadin - button theme = "primary"
-// @click = "${this.addTodo}" >
-//   Add Todo < /vaadin-button> </div >
+//   <vaadin-button theme = "primary" @click = "${this.addTodo}">
+//   Add Todo </vaadin-button> </div >
 
 
 //   <
