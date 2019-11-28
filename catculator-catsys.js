@@ -30,41 +30,51 @@ class CatculatorCatsys extends LitElement {
   constructor() {
     super();
     this.result = [];
+    this.digit = []
   }
 
   render() {
     return html `
     <div class="container">
-      <div class='display'>
+      
+    <div class='display'>
       <vaadin-text-field value="${this.result}"></vaadin-text-field>
-      </div>
+    </div>
+
       <vaadin-button @click='${this.clear}'>C</vaadin-button>
-      <vaadin-button @click='${this.add}'>+</vaadin-button>
-      <vaadin-button @click='${this.percent}'>%</vaadin-button>
+      <vaadin-button @click='${this.operator}'>+</vaadin-button>
       <vaadin-button @click='${this.divide}'>÷</vaadin-button>
       <vaadin-button @click='${this.multiply}'>x</vaadin-button>
       <vaadin-button @click='${this.subtract}'>-</vaadin-button>
 
-      <vaadin-button class="digit" @click='${this.getInputNode}'>7</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>8</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>9</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>5</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>6</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>4</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>1</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>2</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>3</vaadin-button>
-      <vaadin-button class="digit" @click='${this.getInputNode}'>0</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>9</vaadin-button>
+
+      <vaadin-button class="digit" @click='${this.eventClick}'>8</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>7</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>6</vaadin-button>
+
+      <vaadin-button class="digit" @click='${this.eventClick}'>5</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>4</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>3</vaadin-button>
+      
+      <vaadin-button class="digit" @click='${this.eventClick}'>2</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>1</vaadin-button>
+      <vaadin-button class="digit" @click='${this.eventClick}'>0</vaadin-button>
     </div>
    `;
   }
-  getInputNode() {
-    const inputNode = this.shadowRoot.querySelector('.digit')
-    this.result = [...this.result, inputNode.innerText]
-    console.log(this.result);  
+  eventClick(event){
+    const key = event.currentTarget.innerText
+    this.result = [...this.result,key];
   }
   clear(){
     this.result = []
+  }
+  operator(){
+    const numberJoin = this.result.join('')
+    this.digit = [...this.digit, numberJoin]
+    this.clear()
+    console.log(this.digit);
   }
 }
 
