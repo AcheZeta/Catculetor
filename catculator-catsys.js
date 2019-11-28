@@ -15,7 +15,7 @@ class CatculatorCatsys extends LitElement {
   static get properties() {
     return {
       result: {
-        type: Number
+        type: Array
       },
       digit: {
         type: Array
@@ -29,59 +29,78 @@ class CatculatorCatsys extends LitElement {
 
   constructor() {
     super();
-    this.result = 0;
-    this.digit = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    this.result = [0];
   }
 
   render() {
     return html `
-    <div id="display">
-      <h1 id="display__numbers"> ${this.result} </h1>
-    </div>
-    <div class="keyboard">
-      ${this.digit.map(digit => html `
-      <vaadin-button @click="${this.digitSelect}" id="digit" value="${digit}">
-        ${digit}
-      </vaadin-button>
-      `
-      )}
+    <div class="container">
+      <div class='display'>
+      <vaadin-text-field label="Read-only" value="${this.result}" readonly></vaadin-text-field>
+      </div>
+      <vaadin-button @click='${this.clear}'>C</vaadin-button>
+      <vaadin-button @click='${this.add}'>+</vaadin-button>
+      <vaadin-button @click='${this.percent}'>%</vaadin-button>
+      <vaadin-button @click='${this.divide}'>÷</vaadin-button>
+      <vaadin-button @click='${this.multiply}'>x</vaadin-button>
+      <vaadin-button @click='${this.subtract}'>-</vaadin-button>
+
+      <vaadin-button id="digit" @click='${this.onChange}'>7</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>8</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>9</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>5</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>6</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>4</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>1</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>2</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>3</vaadin-button>
+      <vaadin-button id="digit" @click='${this.onChange}'>0</vaadin-button>
     </div>
    `;
   }
+  onChange() {
+    const inputNode = this.shadowRoot.querySelector('#digit')
+    this.result = [...this.result, inputNode.innerText]
+  }
+
   digitSelect() {
     const inputNode = this.shadowRoot.querySelector('#digit')
-    console.log(inputNode.innerText);
+    const inputNodeValue = inputNode.value
+    const inputNode2 = this.shadowRoot.querySelector('#digit2')
+    const inputNodeValue2 = inputNode2.value
+    console.log(inputNodeValue - inputNodeValue2);
+  }
+  percent() {
+    this.display = this.display / 100;
+  }
+  clear() {
+    console.log('clear');
+  }
+  divide() {
+    this.operator = (a, b) => a / b;
+    this.previous = this.display;
+    this.operatorClicked = true;
+  }
+  multiply() {
+    this.operator = (a, b) => a * b;
+    this.previous = this.display;
+    this.operatorClicked = true;
+  }
+  subtract() {
+    this.operator = (a, b) => a - b;
+    this.previous = this.display;
+    this.operatorClicked = true;
+  }
+  add() {
+    this.operator = (a, b) => a + b;
+    this.previous = this.display;
+    this.operatorClicked = true;
+  }
+  equal() {
+    this.display = this.operator(Number(this.previous), Number(this.display));
+    this.previous = null;
+    this.operatorClicked = true;
   }
 }
-
-
-
-
-// <
-// div class = "input-layout"
-// @keyup = "${this.shortcutListener}" >
-//   <
-//   vaadin - text - field placeholder = "Task"
-// value = "${this.task}"
-// @change = "${this.updateTask}" >
-//   <
-//   /vaadin-text-field>
-
-//   <vaadin-button theme = "primary" @click = "${this.addTodo}">
-//   Add Todo </vaadin-button> </div >
-
-
-//   <
-//   div class = "todo-list" >
-//   $ {
-//     this.todos.map(todo => html `
-//           <div class="todo-item">
-//           <vaadin-checkbox ?checked="${todo.complete}" @change="${event => this.updateTodoStatus}">
-//           ${todo.task}
-//           </vaadin-checkbox >
-//           </div>
-//           `)
-//   } <
-//   /div>
 
 window.customElements.define("catculator-catsys", CatculatorCatsys);
