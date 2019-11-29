@@ -34,7 +34,7 @@ class CatculatorCatsys extends LitElement {
     super();
     this.history = [];
     this.result = 0;
-    this.memory = []
+    this.memory = [0]
   }
 
   render() {
@@ -47,10 +47,10 @@ class CatculatorCatsys extends LitElement {
 
       <vaadin-button @click='${this.clear}'>C</vaadin-button>
       <vaadin-button @click='${this.clearAll}'>CE</vaadin-button>
-      <vaadin-button @click='${this.operator}'>+</vaadin-button>
-      <vaadin-button @click='${this.divide}'>÷</vaadin-button>
-      <vaadin-button @click='${this.multiply}'>x</vaadin-button>
-      <vaadin-button @click='${this.subtract}'>-</vaadin-button>
+      <vaadin-button @click='${this.operation}'>+</vaadin-button>
+      <vaadin-button @click='${this.operation}'>÷</vaadin-button>
+      <vaadin-button @click='${this.operation}'>x</vaadin-button>
+      <vaadin-button @click='${this.operation}'>-</vaadin-button>
 
       <vaadin-button class="digit" @click='${this.eventClick}'>9</vaadin-button>
 
@@ -69,20 +69,21 @@ class CatculatorCatsys extends LitElement {
     </div>
    `;
   }
-  eventClick(event){
+  eventClick(event) {
     const key = event.currentTarget.innerText
     this.history = [...this.history, key];
     this.result = Number(this.history.join(''))
   }
-  clear(){
+  clear() {
     this.history = []
   }
-  clearAll(){
-    this.memory = []
+  clearAll() {
+    this.memory = [0]
     this.history = []
-    this.result = 0
+    this.result = 0;
+    console.log('all clear');
   }
-  operator(event){
+  operation(event) {
     const operatorNum = event.currentTarget.innerText
     const numberJoin = Number(this.history.join(''))
     console.log(`numberjoin ${numberJoin}`)
@@ -90,15 +91,47 @@ class CatculatorCatsys extends LitElement {
     this.clear()
     console.log(operatorNum, this.memory);
     this.doOperation(operatorNum, this.memory)
-    
   }
-  doOperation(operator, memory){
-    this.result = this.memory.reduce(this.reducer)
+  doOperation(operator, memory) {
+
+    switch (operator) {
+      case '+':
+        this.sum()
+        break;
+      case '-':
+        this.substract()
+        break;
+      case '*':
+        this.multiply();
+        break;
+      case '/':
+        this.divide();
+        break;
+    }
+  }
+
+  sum() {
+    this.result = this.memory[this.memory.length - 1] + this.memory[this.memory.length - 2];
+    this.memory.push(this.result);
+
     console.log(this.result)
   }
-  reducer(accumulator, currentValue) {
-    return accumulator + currentValue;
+  substract() {
+    this.result = this.memory[this.memory.length - 1] - this.memory[this.memory.length - 2];
+    this.memory.push(this.result);
+    console.log(this.result)
   }
+  divide() {
+    this.result = this.memory[this.memory.length - 1] / this.memory[this.memory.length - 2];
+    this.memory.push(this.result);
+    console.log(this.result)
+  }
+  multiply() {
+    this.result = this.memory[this.memory.length - 1] * this.memory[this.memory.length - 2];
+    this.memory.push(this.result);
+    console.log(this.result)
+  }
+  reducer() {}
 }
 
 window.customElements.define("catculator-catsys", CatculatorCatsys);
