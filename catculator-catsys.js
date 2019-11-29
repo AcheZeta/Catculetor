@@ -30,7 +30,7 @@ class CatculatorCatsys extends LitElement {
   constructor() {
     super();
     this.result = [];
-    this.digit = []
+    this.memory = []
   }
 
   render() {
@@ -42,6 +42,7 @@ class CatculatorCatsys extends LitElement {
     </div>
 
       <vaadin-button @click='${this.clear}'>C</vaadin-button>
+      <vaadin-button @click='${this.clearAll}'>CE</vaadin-button>
       <vaadin-button @click='${this.operator}'>+</vaadin-button>
       <vaadin-button @click='${this.divide}'>÷</vaadin-button>
       <vaadin-button @click='${this.multiply}'>x</vaadin-button>
@@ -60,6 +61,7 @@ class CatculatorCatsys extends LitElement {
       <vaadin-button class="digit" @click='${this.eventClick}'>2</vaadin-button>
       <vaadin-button class="digit" @click='${this.eventClick}'>1</vaadin-button>
       <vaadin-button class="digit" @click='${this.eventClick}'>0</vaadin-button>
+      <vaadin-button class="digit" @click='${this.equal}'>=</vaadin-button>
     </div>
    `;
   }
@@ -70,11 +72,15 @@ class CatculatorCatsys extends LitElement {
   clear(){
     this.result = []
   }
-  operator(){
-    const numberJoin = this.result.join('')
-    this.digit = [...this.digit, numberJoin]
+  clearAll(){
+    this.memory = []
+  }
+  operator(event){
+    const operatorNum = event.currentTarget.innerText
+    const numberJoin = Number(this.result.join(''))
+    this.memory = [...this.memory, numberJoin]
     this.clear()
-    console.log(this.digit);
+    console.log(operatorNum, this.memory);
   }
 }
 
