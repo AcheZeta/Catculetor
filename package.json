@@ -1,0 +1,28 @@
+{
+  "name": "@catsys/catculator-catsys",
+  "version": "1.0.0",
+  "description": "Catsys component generated",
+  "main": "catculator-catsys.js",
+  "keywords": [
+    "lit-element",
+    "component"
+  ],
+  "author": "autogenered <hello@catsys.com>",
+  "license": "MIT",
+  "scripts": {
+    "karma": "karma",
+    "test": "karma start"
+  },
+  "dependencies": {
+    "@vaadin/vaadin": "^14.0.14",
+    "@vaadin/vaadin-button": "^2.2.1",
+    "@vaadin/vaadin-checkbox": "^2.2.10",
+    "@vaadin/vaadin-radio-button": "^1.2.3",
+    "@vaadin/vaadin-text-field": "^2.4.14",
+    "lit-element": "^2.0.0"
+  },
+  "devDependencies": {
+    "@open-wc/testing": "^0.9.11",
+    "@open-wc/testing-karma": "^0.4.7"
+  }
+}
