@@ -15,9 +15,12 @@ class CatculatorCatsys extends LitElement {
   static get properties() {
     return {
       result: {
-        type: Array
+        type: Number
       },
       digit: {
+        type: Array
+      },
+      history: {
         type: Array
       }
     };
@@ -29,7 +32,8 @@ class CatculatorCatsys extends LitElement {
 
   constructor() {
     super();
-    this.result = [];
+    this.history = [];
+    this.result = 0;
     this.memory = []
   }
 
@@ -67,20 +71,33 @@ class CatculatorCatsys extends LitElement {
   }
   eventClick(event){
     const key = event.currentTarget.innerText
-    this.result = [...this.result,key];
+    this.history = [...this.history, key];
+    this.result = Number(this.history.join(''))
   }
   clear(){
-    this.result = []
+    this.history = []
   }
   clearAll(){
     this.memory = []
+    this.history = []
+    this.result = 0
   }
   operator(event){
     const operatorNum = event.currentTarget.innerText
-    const numberJoin = Number(this.result.join(''))
+    const numberJoin = Number(this.history.join(''))
+    console.log(`numberjoin ${numberJoin}`)
     this.memory = [...this.memory, numberJoin]
     this.clear()
     console.log(operatorNum, this.memory);
+    this.doOperation(operatorNum, this.memory)
+    
+  }
+  doOperation(operator, memory){
+    this.result = this.memory.reduce(this.reducer)
+    console.log(this.result)
+  }
+  reducer(accumulator, currentValue) {
+    return accumulator + currentValue;
   }
 }
 
